@@ -3,20 +3,16 @@ FROM golang:1.10.3-alpine3.7 AS build
 #新增 GLIBC
 ENV GLIBC_VERSION "2.28-r0"
 
-# 修改为中国时区
-RUN apk --no-cache add tzdata  \
-    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && echo "Asia/Shanghai" > /etc/timezone
-
 # Download and install glibc
 RUN apk add --update && \
+    apk add --no-cache tzdata && \
     apk add --no-cache --upgrade \
     ca-certificates \
     gcc \
     g++ \
     make \
     curl \
-    git
+    git \
 
 RUN curl -Lo /etc/apk/keys/sgerrand.rsa.pub "https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub" && \
     curl -Lo /var/glibc.apk "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk" && \
