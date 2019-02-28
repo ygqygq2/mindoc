@@ -3,6 +3,11 @@ FROM golang:1.10.3-alpine3.7 AS build
 #新增 GLIBC
 ENV GLIBC_VERSION "2.28-r0"
 
+# 修改为中国时区
+RUN apk --no-cache add tzdata  \
+    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" > /etc/timezone
+
 # Download and install glibc
 RUN apk add --update && \
     apk add --no-cache --upgrade \
