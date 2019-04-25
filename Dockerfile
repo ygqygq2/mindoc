@@ -5,14 +5,13 @@ ENV GLIBC_VERSION "2.28-r0"
 
 # Download and install glibc
 RUN apk add --update && \
-    apk add --no-cache tzdata && \
     apk add --no-cache --upgrade \
     ca-certificates \
     gcc \
     g++ \
     make \
     curl \
-    git \
+    git
 
 RUN curl -Lo /etc/apk/keys/sgerrand.rsa.pub "https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub" && \
     curl -Lo /var/glibc.apk "https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk" && \
@@ -47,6 +46,7 @@ LABEL maintainer="longfei6671@163.com"
 
 RUN apk add --update && \
     apk add --no-cache --upgrade \
+    tzdata \
     mesa-gl \
     python \
     qt5-qtbase-x11 \
